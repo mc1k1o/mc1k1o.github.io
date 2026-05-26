@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1k1o — Игровой проект Minecraft</title>
-    
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -30,7 +28,6 @@
             overflow-x: hidden;
         }
 
-        /* Хедер с плавным растворением */
         header {
             display: flex;
             justify-content: center;
@@ -98,7 +95,6 @@
             box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
         }
 
-        /* Главный экран */
         .hero {
             height: 100vh;
             display: flex;
@@ -127,7 +123,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Виджет онлайна */
         .status-tag {
             display: flex;
             align-items: center;
@@ -139,7 +134,6 @@
             font-weight: 600;
             margin-bottom: 35px;
             backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #444; }
@@ -159,7 +153,6 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .ip-text { font-family: monospace; font-size: 1.5rem; color: var(--primary); font-weight: bold; padding: 0 20px; }
@@ -177,77 +170,92 @@
             transition: 0.3s;
         }
 
-        .copy-btn:hover { background: #fff; transform: translateY(-2px); }
+        .features {
+            padding: 100px 10%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            background: #0c0c0c;
+        }
 
-        /* Свод правил */
+        .feature-card {
+            background: var(--card-bg);
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-10px);
+        }
+
+        .feature-card i {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .feature-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .rules-wrapper {
             padding: 120px 5%;
             background: #0a0a0a;
-            position: relative;
         }
 
-        .rules-header {
+        .rules-header { text-align: center; margin-bottom: 60px; }
+        .rules-header h2 { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; color: var(--primary); text-transform: uppercase; letter-spacing: 5px; }
+
+        .codex { max-width: 900px; margin: 0 auto; counter-reset: rule-n; }
+        .rule-item { display: flex; gap: 30px; padding: 40px; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(var(--primary-rgb), 0.1); position: relative; }
+        .rule-item::before { counter-increment: rule-n; content: "§" counter(rule-n); font-family: 'Montserrat', sans-serif; font-size: 4rem; font-weight: 900; color: rgba(var(--primary-rgb), 0.05); position: absolute; right: 20px; bottom: -10px; }
+        .rule-content h3 { font-family: 'Montserrat', sans-serif; color: var(--primary); margin-bottom: 12px; font-size: 1.2rem; text-transform: uppercase; }
+
+        .social-section {
+            padding: 100px 5%;
             text-align: center;
-            margin-bottom: 80px;
+            background: #0c0c0c;
         }
 
-        .rules-header h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 3rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 5px;
-        }
-
-        .codex {
-            max-width: 900px;
+        .tg-card {
+            max-width: 550px;
             margin: 0 auto;
-            counter-reset: rule-n;
+            background: #161616;
+            padding: 50px;
+            border-radius: 30px;
+            border-bottom: 4px solid #24A1DE;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        .rule-item {
-            display: flex;
-            gap: 30px;
-            padding: 40px;
-            background: rgba(255,255,255,0.02);
-            border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .rule-item:hover { background: rgba(var(--primary-rgb), 0.05); }
-
-        .rule-item::before {
-            counter-increment: rule-n;
-            content: "§" counter(rule-n);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 4rem;
-            font-weight: 900;
-            color: rgba(var(--primary-rgb), 0.05);
-            position: absolute;
-            right: 20px;
-            bottom: -10px;
-        }
-
-        .rule-content h3 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--primary);
-            margin-bottom: 12px;
-            font-size: 1.3rem;
+        .btn-tg {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #24A1DE;
+            color: white;
+            padding: 18px 40px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 25px;
+            transition: 0.3s;
             text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        .rule-content p {
-            color: var(--text-dim);
-            font-size: 1.05rem;
-            max-width: 800px;
-        }
+        .btn-tg:hover { background: #31b3f0; transform: scale(1.05); }
 
         footer { padding: 60px 5%; text-align: center; background: #080808; border-top: 1px solid rgba(255,255,255,0.05); }
-        .mojang-disclaimer { font-size: 0.75rem; color: #444; margin-top: 20px; letter-spacing: 1px; }
+        .mojang-disclaimer { font-size: 0.75rem; color: #444; margin-top: 20px; }
 
-        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 15px 35px; border-radius: 12px; font-weight: 900; font-family: 'Montserrat', sans-serif; display: none; z-index: 2000; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 15px 35px; border-radius: 12px; font-weight: 900; font-family: 'Montserrat', sans-serif; display: none; z-index: 2000; }
     </style>
 </head>
 <body>
@@ -277,11 +285,28 @@
     </div>
 </section>
 
+<section class="features">
+    <div class="feature-card">
+        <i class="fas fa-users"></i>
+        <h3>Комьюнити</h3>
+        <p>Игроки сами формируют историю, экономику и политику мира. Мы даем инструменты — вы создаете контент.</p>
+    </div>
+    <div class="feature-card">
+        <i class="fas fa-fist-raised"></i>
+        <h3>Свобода</h3>
+        <p>Гриф разрешен, приватов нет. Защищай свои постройки хитростью и дипломатией, а не командами.</p>
+    </div>
+    <div class="feature-card">
+        <i class="fas fa-map-marked-alt"></i>
+        <h3>Без вайпов</h3>
+        <p>Ваши постройки и прогресс сохраняются навсегда. Карта сервера не обнуляется годами.</p>
+    </div>
+</section>
+
 <section class="rules-wrapper" id="rules">
     <div class="rules-header">
         <h2>Свод правил</h2>
     </div>
-
     <div class="codex">
         <div class="rule-item">
             <div class="rule-content">
@@ -289,34 +314,40 @@
                 <p>Запрещено использование клиентов, читов, клиентских модов, дающих явное преимущество над ванильным клиентом.</p>
             </div>
         </div>
-
         <div class="rule-item">
             <div class="rule-content">
                 <h3>2. Поведение в чате</h3>
                 <p>Запрещается реклама и спам (от 3 одинаковых/похожих сообщений за короткое время) в общем чате.</p>
             </div>
         </div>
-
         <div class="rule-item">
             <div class="rule-content">
                 <h3>3. Производительность сервера</h3>
-                <p>Запрещено негативно влиять на производительность сервера, например, строительство построек сильно ухудшающие работу сервера. Такие постройки могут быть снесены.</p>
+                <p>Запрещено строительство построек, критически ухудшающих работу сервера. Такие объекты будут снесены.</p>
             </div>
         </div>
-
         <div class="rule-item">
             <div class="rule-content">
                 <h3>4. Помеха на спавне</h3>
-                <p>Запрещены постоянные убийства людей без вещей в области спавна (радиус 1000 блоков от 0 координаты), а также трапки и прочие сооружения, мешающие свободному и безопасному передвижению.</p>
+                <p>Запрещены массовые убийства новичков в радиусе 1000 блоков от 0 0 и создание ловушек, мешающих движению.</p>
             </div>
         </div>
-
         <div class="rule-item">
             <div class="rule-content">
                 <h3>5. Гриферство</h3>
-                <p>Гриф нежелателен. Ведь это свободный SMP-сервер, а не тотальная анархия.</p>
+                <p>Гриф нежелателен. Мы стремимся к формату свободного SMP, а не тотального хаоса.</p>
             </div>
         </div>
+    </div>
+</section>
+
+<section class="social-section">
+    <div class="tg-card">
+        <h2 style="font-family: 'Montserrat'; text-transform: uppercase;">Наше сообщество</h2>
+        <p style="margin-top: 10px; color: var(--text-dim);">Новости, ивенты и общение с администрацией в нашем Telegram.</p>
+        <a href="https://t.me/mc1k1o" class="btn-tg" target="_blank">
+            <i class="fab fa-telegram-plane"></i> В КАНАЛ ПРОЕКТА
+        </a>
     </div>
 </section>
 
