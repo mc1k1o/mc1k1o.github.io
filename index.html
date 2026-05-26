@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1k1o — Игровой проект Minecraft</title>
+    
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #cababb;
+            --primary-rgb: 202, 186, 187;
+            --dark-bg: #0f0f0f;
+            --card-bg: rgba(26, 26, 26, 0.9);
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Хедер с плавным растворением */
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 120px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: linear-gradient(180deg, rgba(15, 15, 15, 1) 0%, rgba(15, 15, 15, 0.8) 50%, rgba(15, 15, 15, 0) 100%);
+            backdrop-filter: blur(5px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            transform: translateY(-10px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .server-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            object-fit: contain;
+            border: 2px solid rgba(var(--primary-rgb), 0.3);
+            background: #1a1a1a;
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: var(--text-main);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .rules-nav-btn {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid rgba(var(--primary-rgb), 0.3);
+            padding: 10px 25px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .rules-nav-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+        }
+
+        /* Главный экран */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(15, 15, 15, 0.5), rgba(15, 15, 15, 0.5)), 
+                        url('https://fs.hotmc.ru/upload/jf/60boamzrv2uh7wpz66259m2zbe1ajs7inkzpqwy98zp4pbvepxkjjj1779611295.png') center/cover no-repeat;
+            padding: 120px 20px 0;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(3.5rem, 10vw, 6rem);
+            font-weight: 900;
+            text-shadow: 0 0 40px rgba(var(--primary-rgb), 0.4);
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            max-width: 650px;
+            margin-bottom: 45px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Виджет онлайна */
+        .status-tag {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            margin-bottom: 35px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #444; }
+        .online .status-dot { background: #55ff55; box-shadow: 0 0 12px #55ff55; animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 1; }
+            70% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(0.95); opacity: 1; }
+        }
+
+        .ip-container {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--primary);
+            padding: 10px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .ip-text { font-family: monospace; font-size: 1.5rem; color: var(--primary); font-weight: bold; padding: 0 20px; }
+
+        .copy-btn {
+            background: var(--primary);
+            color: #2b2323;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .copy-btn:hover { background: #fff; transform: translateY(-2px); }
+
+        /* Свод правил */
+        .rules-wrapper {
+            padding: 120px 5%;
+            background: #0a0a0a;
+            position: relative;
+        }
+
+        .rules-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .rules-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .codex {
+            max-width: 900px;
+            margin: 0 auto;
+            counter-reset: rule-n;
+        }
+
+        .rule-item {
+            display: flex;
+            gap: 30px;
+            padding: 40px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rule-item:hover { background: rgba(var(--primary-rgb), 0.05); }
+
+        .rule-item::before {
+            counter-increment: rule-n;
+            content: "§" counter(rule-n);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(var(--primary-rgb), 0.05);
+            position: absolute;
+            right: 20px;
+            bottom: -10px;
+        }
+
+        .rule-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+        }
+
+        .rule-content p {
+            color: var(--text-dim);
+            font-size: 1.05rem;
+            max-width: 800px;
+        }
+
+        footer { padding: 60px 5%; text-align: center; background: #080808; border-top: 1px solid rgba(255,255,255,0.05); }
+        .mojang-disclaimer { font-size: 0.75rem; color: #444; margin-top: 20px; letter-spacing: 1px; }
+
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 15px 35px; border-radius: 12px; font-weight: 900; font-family: 'Montserrat', sans-serif; display: none; z-index: 2000; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <a href="#" class="logo-container">
+            <img src="server-icon.png" alt="" class="server-icon" onerror="this.style.display='none'">
+            <span class="logo-text">1k1o</span>
+        </a>
+        <a href="#rules" class="rules-nav-btn">Правила</a>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>1k1o</h1>
+    <p>Полу-анархический SMP проект для тех, кто ценит свободу и живое комьюнити.</p>
+    
+    <div id="status-indicator" class="status-tag">
+        <span class="status-dot"></span>
+        <span id="online-text">Синхронизация...</span>
+    </div>
+
+    <div class="ip-container">
+        <div class="ip-text">mc.1k1o.ru</div>
+        <button class="copy-btn" onclick="copyIP()">Копировать</button>
+    </div>
+</section>
+
+<section class="rules-wrapper" id="rules">
+    <div class="rules-header">
+        <h2>Свод правил</h2>
+    </div>
+
+    <div class="codex">
+        <div class="rule-item">
+            <div class="rule-content">
+                <h3>1. Читы и прочее ПО</h3>
+                <p>Запрещено использование клиентов, читов, клиентских модов, дающих явное преимущество над ванильным клиентом.</p>
+            </div>
+        </div>
+
+        <div class="rule-item">
+            <div class="rule-content">
+                <h3>2. Поведение в чате</h3>
+                <p>Запрещается реклама и спам (от 3 одинаковых/похожих сообщений за короткое время) в общем чате.</p>
+            </div>
+        </div>
+
+        <div class="rule-item">
+            <div class="rule-content">
+                <h3>3. Производительность сервера</h3>
+                <p>Запрещено негативно влиять на производительность сервера, например, строительство построек сильно ухудшающие работу сервера. Такие постройки могут быть снесены.</p>
+            </div>
+        </div>
+
+        <div class="rule-item">
+            <div class="rule-content">
+                <h3>4. Помеха на спавне</h3>
+                <p>Запрещены постоянные убийства людей без вещей в области спавна (радиус 1000 блоков от 0 координаты), а также трапки и прочие сооружения, мешающие свободному и безопасному передвижению.</p>
+            </div>
+        </div>
+
+        <div class="rule-item">
+            <div class="rule-content">
+                <h3>5. Гриферство</h3>
+                <p>Гриф нежелателен. Ведь это свободный SMP-сервер, а не тотальная анархия.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="logo-text" style="font-size: 1.2rem; margin-bottom: 10px;">1k1o Project</div>
+    <div class="text-dim">&copy; 2026 Все права защищены.</div>
+    <div class="mojang-disclaimer">NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG.</div>
+</footer>
+
+<div id="toast">IP-АДРЕС СКОПИРОВАН</div>
+
+<script>
+    function copyIP() {
+        navigator.clipboard.writeText("mc.1k1o.ru").then(() => {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        });
+    }
+
+    async function updateOnline() {
+        try {
+            const res = await fetch('https://api.mcsrvstat.us/2/mc.1k1o.ru');
+            const data = await res.json();
+            const el = document.getElementById('online-text');
+            const ind = document.getElementById('status-indicator');
+            if (data.online) {
+                ind.classList.add('online');
+                el.innerText = `ОНЛАЙН: ${data.players.online} / ${data.players.max}`;
+            } else {
+                ind.classList.remove('online');
+                el.innerText = "СЕРВЕР ОФФЛАЙН";
+            }
+        } catch (e) { el.innerText = "СТАТУС НЕИЗВЕСТЕН"; }
+    }
+    updateOnline();
+    setInterval(updateOnline, 60000);
+</script>
+
+</body>
+</html>
